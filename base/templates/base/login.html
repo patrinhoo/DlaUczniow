@@ -1,0 +1,55 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- MESSAGES  -->
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="message-error">{{ message }}</div>
+    {% endif %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+    <div class="message-success">{{ message }}</div>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- LOGIN PAGE - LOGIN DATA -->
+<form action="" method="POST">
+    {% csrf_token %}
+    <div class="login-wrapper">
+        <div class="login-title">LOGOWANIE</div> 
+        <hr>
+        <div>login</div>
+        <input name="username" type="text" placeholder="Wpisz login">
+        <div>hasło</div>
+        <input name="password" type="password" placeholder="Wpisz hasło">
+        <input type="submit" value="Zaloguj">
+        <div><a href="{% url 'register' %}">Nie masz jeszcze konta? Zarejestruj się!</a></div>
+    </div>
+</form>
+
+<!-- LOGIN PAGE - NEWEST COURSES -->
+<div class="courses-header">
+    <hr>
+    NAJNOWSZE KURSY
+    <hr>
+</div>
+
+<div class="courses-wrapper">
+    {% for course in recent_courses %}
+    <div class="course-wrapper">
+        <a href="{% url 'course-info' course.id %}">
+            <div class="course-icon"><img src="{{course.image.url}}" alt=""></div>
+            <div class="course-title">{{course.course_name}}</div>
+            <div class="course-author">{{course.author.userprofile}}</div>
+            <!-- <div class="course-mark">4,7 <div class="votes-count">(95)</div></div> -->
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}

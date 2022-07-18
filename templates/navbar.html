@@ -1,0 +1,35 @@
+{% load static %}
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="brand-title">
+        <a href="{% url 'home' %}">Dla uczniów</a>
+    </div>
+
+    <div class="toggle-button">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </div>
+
+    <div class="navbar-links">
+        <form id="search-form" method="GET" action="{% url 'search' %}">
+            <ul>
+                <li class="search-li">
+                    <input type="text" name="q" placeholder="Czego chcesz się nauczyć?">
+                </li>
+                <li class="search-icon">
+                    <a href="#" onclick="document.forms['search-form'].submit();">&#x1F50E;&#xFE0E;</a>
+                </li>
+                
+                {% if request.user.is_authenticated %}
+                <li class="action-btn"><a href="{% url 'edit-user' %}">USTAWIENIA</a></li>
+                <li class="action-btn"><a href="{% url 'logout' %}">WYLOGUJ</a></li>
+                {% else %}
+                <li class="action-btn"><a href="{% url 'register' %}">REJESTRACJA</a></li>
+                <li class="action-btn"><a href="{% url 'login' %}">ZALOGUJ</a></li>
+                {% endif %}
+            </ul>
+        </form>
+    </div>
+</nav>

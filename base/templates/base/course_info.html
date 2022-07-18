@@ -1,0 +1,118 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- COURSE PAGE -->
+<div class="course-page-wrapper">
+    <!-- COURSE PAGE - COLUMN 1 -->
+    <div class="column-1">
+        <div class="col-1">
+            <div class="course-wrapper">
+                <div class="col1-course-image">
+                    <img src="{{course.image.url}}" alt="">
+                </div>
+            </div>
+            <div class="join-div">
+                <a href="{% url 'join-course' course.id %}">
+                    <input class="join-btn" type="button" value="DOŁĄCZ DO KURSU">
+                </a>
+            </div>
+            <div>
+                <div class="col1-course-contains">
+                    <div class="course-contains-header">Kurs zawiera:</div> 
+                    <hr>
+                    <ul>
+                        <li class="li-lessons">10 lekcje</li>
+                        <li class="li-movies">104 min filmów</li>
+                        <!-- <li class="li-exercises">5 ćwiczeń</li> -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="course-overwiew">
+            <div class="course-title">{{course}}</div>
+            <hr>
+            <div class="course-short-description">{{course.description}}</div>
+            <div class="course-info">
+                <div class="course-marks">
+                    <!-- <div class="course-mark">4,7<div class="votes-count">(95)</div></div> -->
+                    <div class="course-members">Liczba uczestników: 1276</div>
+                </div>
+                <div class="course-author">Autor: <a href="{% url 'author' course.author.id %}">{{course.author.userprofile}}</a></div>
+            </div>
+
+            <div class="course-last-update">&#8635; Ostatnia aktualizacja: {{course.modified|date:"d F Y"}}</div>
+        </div>
+
+        <div class="you-will-learn">
+            <div class="you-will-learn-title">
+                W tym kursie nauczysz się:
+            </div>
+            <hr>
+            <ul>
+                {% for skill in learned_skills %}
+                <li class="you-will-learn-skill">{{skill|title}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="in-this-course">
+            <div class="in-this-course-title">
+                W tym kursie
+            </div>
+            <hr>
+
+            {% for chapter, chapter_lessons in chapters_lessons.items %}
+            <div class="chapter">
+                <div class="title">{{chapter|title}}</div>
+                    {% for lesson in chapter_lessons %}
+                    <div class="lesson">{{lesson}}</div>
+                    {% endfor %}
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <div class="requirements">
+            <div class="requirements-title">
+                Co musisz umieć?
+            </div>
+            <hr>
+            <ul>
+                {% for requiment in requirements %}
+                <li class="requirements-skill">{{requiment|title}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    
+    
+    <!-- COURSE PAGE - COLUMN 2 -->
+    <div class="column-2">
+        <div class="course-wrapper">
+            <div class="course-image">
+                <img src="{{course.image.url}}" alt="">
+            </div>
+        </div>
+        <div class="join-div">
+            <a href="{% url 'join-course' course.id %}">
+                <input class="join-btn" type="button" value="DOŁĄCZ DO KURSU">
+            </a>
+        </div>
+        <div>
+            <div class="course-contains">
+                <div class="course-contains-header">Kurs zawiera:</div> 
+                <hr>
+                <ul>
+                    <li class="li-lessons">10 lekcje</li>
+                    <li class="li-movies">104 min filmów</li>
+                    <!-- <li class="li-exercises">5 ćwiczeń</li> -->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

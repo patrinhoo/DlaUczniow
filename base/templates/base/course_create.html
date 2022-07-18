@@ -1,0 +1,71 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="message-error">{{ message }}</div>
+    {% endif %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+    <div class="message-success">{{ message }}</div>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- COURSE EDITION PAGE - COURSE DATA  -->
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="course-edition-wrapper">
+        <div class="login-title">TWORZENIE KURSU</div> 
+        <hr>
+        <input type="submit" class="save-changes" value="Utwórz kurs">
+        <a href="{% url 'edit-user' %}">
+            <input type="button" class="cancel-changes" value="Odrzuć zmiany">
+        </a>
+        <hr>
+        <div>nazwa kursu</div>
+        <input name="course-name" type="text" placeholder="Podaj nazwę kursu">
+        <img src="{% static 'images/default-course.png' %}" alt="">
+        <input name="course-image" type="file" accept="image/*">
+
+        <div>Wybierz kategorię:</div>
+        <div class="select-div">
+            <select name="category" id="category">
+                <option value="">------</option>
+                {% for category in available_categories %}
+                <option value="{{category}}">{{category}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>Krótki opis kursu:</div>
+        <textarea name="description" rows="10" maxlength="1000" placeholder="O czym będzie ten kurs?"></textarea>
+    </div>
+
+    <!-- COURSE EDITION PAGE - CHAPTERS  -->
+    <div class="course-edition-wrapper">
+        <div class="login-title">ROZDZIAŁY I LEKCJE</div>
+        <hr>
+        <button type="button" class="add-chapter-button">DODAJ ROZDZIAŁ</button>
+    </div>
+
+    <!-- COURSE EDITION PAGE - YOU WILL LEARN  -->
+    <div class="course-edition-wrapper">
+        <div class="login-title">NAUCZYSZ SIĘ</div>
+        <hr>
+        <button type="button" class="add-skill-button">&#43;</button>
+    </div>
+
+    <!-- COURSE EDITION PAGE - YOU NEED TO KNOW  -->
+    <div class="course-edition-wrapper">
+        <div class="login-title">MUSISZ JUŻ UMIEĆ</div>
+        <hr>
+        <button type="button" class="add-requirement-button">&#43;</button>
+    </div>
+</form>
+
+{% endblock content %}

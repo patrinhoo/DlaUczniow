@@ -1,0 +1,29 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- COURSE EDITION PAGE - COURSE DATA  -->
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="course-edition-wrapper">
+        <div class="login-title">ROZDZIAŁ: <br><br>
+            {{lesson.chapter}} <br><br>
+        </div> 
+        <hr>
+        <br><br>
+        <div class="login-title">Czy na pewno chcesz usunąć następującą lekcję:<br><br>
+            {{lesson|upper}} ?
+        </div> 
+        <br>
+
+        <hr>
+        <input type="submit" class="save-changes" value="USUŃ lekcję">
+        <a href="{% url 'chapter-edit' lesson.chapter.id %}">
+            <input type="button" class="cancel-changes" value="NIE usuwaj lekcji">
+        </a>
+        <hr>
+    </div>
+</form>
+
+{% endblock content %}

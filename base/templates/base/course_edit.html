@@ -1,0 +1,113 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="message-error">{{ message }}</div>
+    {% endif %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+    <div class="message-success">{{ message }}</div>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- COURSE EDITION PAGE - COURSE DATA  -->
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="course-edition-wrapper">
+        <div class="login-title">EDYCJA KURSU</div> 
+        <hr>
+        <input type="submit" class="save-changes" value="Zapisz zmiany">
+        <a href="{% url 'edit-user' %}">
+            <input type="button" class="cancel-changes" value="Odrzuć zmiany">
+        </a>
+        <hr>
+        <div>nazwa kursu</div>
+        <input name="course-name" type="text" placeholder="Podaj nazwę kursu" value="{{course.course_name}}">
+        <img src="{{course.image.url}}" alt="">
+        <input name="course-image" type="file" accept="image/*">
+
+        <div>Wybierz kategorię:</div>
+        <div class="select-div">
+            <select name="category" id="category">
+                <option value="{{actual_category}}">{{actual_category}}</option>
+                {% for category in available_categories %}
+                <option value="{{category}}">{{category}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>Krótki opis kursu:</div>
+        <textarea name="description" rows="10" maxlength="1000" placeholder="O czym będzie ten kurs?">{{course.description}}</textarea>
+    </div>
+
+    <!-- COURSE EDITION PAGE - CHAPTERS  -->
+    <div class="course-edition-wrapper">
+        <div class="login-title">ROZDZIAŁY I LEKCJE</div>
+        <hr>
+
+        {% for chapter in chapters %}
+        <div class="course-chapter">
+            <input name="chapter" type="text" value="{{chapter}}" disabled="disabled">
+            <div class="lessons">
+                <div class="sub-chapter">
+                    <a href="{% url 'chapter-edit' chapter.id %}" class="left-btn">
+                        <button type="button" class="edit-chapter-button">EDYTUJ ROZDZIAŁ</button>
+                    </a>
+                    <a href="{% url 'chapter-del' chapter.id %}" class="right-btn">
+                        <button type="button" class="remove-chapter-button">USUŃ ROZDZIAŁ</button>
+                    </a>
+                </div>
+            </div>
+            <hr>
+        </div>
+        {% endfor %}
+        <button type="button" class="add-chapter-button">DODAJ ROZDZIAŁ</button>
+    </div>
+
+    <!-- COURSE EDITION PAGE - YOU WILL LEARN  -->
+    <div class="course-edition-wrapper">
+        <div class="login-title">NAUCZYSZ SIĘ</div>
+        <hr>
+
+        {% for skill in skills %}
+        <div class="skill">
+            <input name="skill" type="text" value="{{skill}}" disabled="disabled">
+            <a href="{% url 'skill-del' skill.id %}">
+                <button type="button" class="remove-button">
+                    &#8722;
+                </button>
+            </a>
+        </div>
+        {% endfor %}
+
+        <button type="button" class="add-skill-button">&#43;</button>
+    </div>
+
+    <!-- COURSE EDITION PAGE - YOU NEED TO KNOW  -->
+    <div class="course-edition-wrapper">
+        <div class="login-title">MUSISZ JUŻ UMIEĆ</div>
+        <hr>
+        
+        {% for requirement in requirements %}
+        <div class="skill">
+            <input name="skill" type="text" value="{{requirement}}" disabled="disabled">
+            <a href="{% url 'req-del' requirement.id %}">
+                <button type="button" class="remove-button">
+                    &#8722;
+                </button>
+            </a>
+        </div>
+        {% endfor %}
+
+        <button type="button" class="add-requirement-button">&#43;</button>
+    </div>
+</form>
+
+
+{% endblock content %}

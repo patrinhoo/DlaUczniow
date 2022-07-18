@@ -1,0 +1,28 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- COURSE EDITION PAGE - COURSE DATA  -->
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="course-edition-wrapper">
+        <div class="login-title">KURS: <br>
+            {{chapter.course}}
+        </div> 
+        <hr>
+        <div class="login-title">Czy na pewno chcesz usunąć następujący rozdział (wraz z lekcjami w danych rozdziale):<br><br>
+            {{chapter|upper}}?
+        </div> 
+        <br>
+
+        <hr>
+        <input type="submit" class="save-changes" value="USUŃ rozdział">
+        <a href="{% url 'course-edit' chapter.course.id %}">
+            <input type="button" class="cancel-changes" value="NIE usuwaj rozdziału">
+        </a>
+        <hr>
+    </div>
+</form>
+
+{% endblock content %}

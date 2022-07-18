@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- SEARCH PAGE - SEARCH RESULTS -->
+<div class="courses-header">
+    WYNIKI WYSZUKIWANIA
+</div>
+
+<div class="courses-wrapper">
+
+    {% for course in courses %}
+    <div class="course-wrapper">
+        <a href="{% url 'course-info' course.id %}">
+            <div class="course-icon"><img src="{{course.image.url}}" alt=""></div>
+            <div class="course-title">{{course}}</div>
+            <div class="course-author">{{course.author.userprofile}}</div>
+            <!-- <div class="course-mark">4,7 <div class="votes-count">(95)</div></div> -->
+        </a>
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock content %}

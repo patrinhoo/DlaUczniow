@@ -1,0 +1,123 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="message-error">{{ message }}</div>
+    {% endif %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+    <div class="message-success">{{ message }}</div>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- CORSE PAGE - VIDEO -->
+<div class="course-video">
+    <video onloadstart="this.volume=0.5" controls disablePictureInPicture controlsList="nodownload">
+        <source src="{{actual_lesson.video.url}}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="lessons-navfull-wrapper">
+        <div class="lessons-nav-title">
+            WYBIERZ LEKCJĘ ({{ chapters_lessons|length }} rozdział{% if chapters_lessons|length == 0 or chapters_lessons|length > 4%}ów{% elif chapters_lessons|length > 1 %}y{% endif %})
+        </div> 
+        <hr>
+
+        {% for chapter, chapter_lessons in chapters_lessons.items %}
+        <div class="chapter">
+            <div class="title">{{chapter|title}}</div>
+                {% for lesson in chapter_lessons %}
+                <div class="lesson"><a href="{% url 'course' course.id lesson.id %}">{{lesson}}</a></div>
+                {% endfor %}
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<!-- CORSE PAGE - COURSE NAV -->
+<div class="lessons-nav-wrapper">
+    <div class="lessons-nav-title">WYBIERZ LEKCJĘ ({{ chapters_lessons|length }} działów)</div> 
+    <hr>
+
+    {% for chapter, chapter_lessons in chapters_lessons.items %}
+    <div class="chapter">
+        <div class="title">{{chapter|title}}</div>
+            {% for lesson in chapter_lessons %}
+            <div class="lesson"><a href="{% url 'course' course.id lesson.id %}">{{lesson}}</a></div>
+            {% endfor %}
+    </div>
+    {% endfor %}
+
+</div>
+
+<!-- CORSE PAGE - ACTUAL LESSON -->
+<div class="actual-lesson-wrapper">
+    <div class="actual-lesson-title">WYBRANA LEKCJA</div> 
+    <hr>
+    <div class="actual-chapter">{{actual_chapter}}</div>
+    <div class="actual-lesson">{{actual_lesson}}</div>
+</div>
+
+<!-- CORSE PAGE - COMMENTS -->
+<div class="comments-wrapper">
+    <div class="comments-title">KOMENTARZE</div> 
+    <hr>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="add-comment">
+            <input name="comment-body" type="text" placeholder="Komentarz...">
+            <!-- <button>Dodaj komentarz</button> -->
+            <input type="submit" value="Dodaj komentarz">
+        </div>
+    </form>
+
+    {% for comment in comments %}
+    <div class="comment">
+        <div class="comment-info">    
+            <div class="comment-user">
+                <a href="">{{comment.user.userprofile}}</a>
+            </div>
+            <!-- <div class="comment-date">23 hours ago</div> -->
+            
+            <div class="comment-date">{{comment.created|timesince}}</div>
+        </div>
+        <hr>
+        <div class="comment-text">
+            {{comment.comment_body}}
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+
+<!-- CORSE PAGE - NEWEST COURSES -->
+<div class="courses-header">
+    <hr>
+    NAJNOWSZE KURSY
+    <hr>
+</div>
+
+<div class="courses-wrapper">
+
+    {% for course in recent_courses %}
+    <div class="course-wrapper">
+        <a href="{% url 'course-info' course.id %}">
+            <div class="course-icon"><img src="{{course.image.url}}" alt=""></div>
+            <div class="course-title">{{course}}</div>
+            <div class="course-author">{{course.author.userprofile}}</div>
+            <!-- <div class="course-mark">4,7 <div class="votes-count">(95)</div></div> -->
+        </a>
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock content %}

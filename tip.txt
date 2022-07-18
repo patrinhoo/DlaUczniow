@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/54519245/insert-list-in-sqlite-table-with-django

@@ -1,0 +1,46 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="message-error">{{ message }}</div>
+    {% endif %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+    <div class="message-success">{{ message }}</div>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- COURSE EDITION PAGE - COURSE DATA  -->
+
+<div class="course-edition-wrapper">
+    <div class="login-title">KURS W BUDOWIE</div> 
+    <hr>
+    <img src="{% static 'images/under_construction.png' %}" alt="">
+</div>
+
+<hr/>
+<!-- UNDER CONSTRUCTION PAGE - COURSES -->
+<div class="courses-header">
+    POLECANE KURSY
+</div>
+
+<div class="courses-wrapper">
+    {% for course in recent_courses %}
+    <div class="course-wrapper">
+        <a href="{% url 'course-info' course.id %}">
+            <div class="course-icon"><img src="{{course.image.url}}" alt=""></div>
+            <div class="course-title">{{course.course_name}}</div>
+            <div class="course-author">{{course.author.userprofile.name}}</div>
+            <!-- <div class="course-mark">4,7 <div class="votes-count">(95)</div></div> -->
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}

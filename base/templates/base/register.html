@@ -1,0 +1,71 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- MESSAGES  -->
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="message-error">{{ message }}</div>
+    {% endif %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+    <div class="message-success">{{ message }}</div>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- REGISTER PAGE - REGISTER DATA  -->
+<form action="" method="POST">
+    {% csrf_token %}
+    <div class="login-wrapper">
+        <div class="login-title">REJESTRACJA</div> 
+        <hr>
+        
+
+        {% for field in form %}
+        <div class="form-field">
+            {{field.label_tag}}
+            {{field}}
+        </div>
+        {% endfor %}
+        
+        <!-- {{form.as_p}} -->
+        
+        <!-- <div>login</div>
+        <input name="login" type="text" placeholder="Podaj login">
+        <div>hasło</div>
+        <input name="password" type="password" placeholder="Podaj hasło">
+        <div>powtórz hasło</div>
+        <input name="password2" type="password" placeholder="Powtórz hasło">
+        <div>email</div>
+        <input name="email" type="email" placeholder="Podaj email"> -->
+
+        <input type="submit" value="Utwórz konto">
+        <div><a href="{% url 'login' %}">Masz już konto? Zaloguj się!</a></div>
+    </div>
+</form>
+
+<!-- REGISTER PAGE - NEWEST COURSES -->
+<div class="courses-header">
+    <hr>
+    NAJNOWSZE KURSY
+    <hr>
+</div>
+
+<div class="courses-wrapper">
+    {% for course in recent_courses %}
+    <div class="course-wrapper">
+        <a href="{% url 'course-info' course.id %}">
+            <div class="course-icon"><img src="{{course.image.url}}" alt=""></div>
+            <div class="course-title">{{course.course_name}}</div>
+            <div class="course-author">{{course.author.userprofile}}</div>
+            <!-- <div class="course-mark">4,7 <div class="votes-count">(95)</div></div> -->
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}

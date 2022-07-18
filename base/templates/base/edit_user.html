@@ -1,0 +1,82 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="message-error">{{ message }}</div>
+    {% endif %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+    <div class="message-success">{{ message }}</div>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- EDIT USER PAGE - USER DATA  -->
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="settings-wrapper">
+        <img src="{{profile.avatar.url}}" alt="">
+
+        {% for field in form %}
+        <div class="form-field">
+            {{field.label_tag}}
+            {{field}}
+        </div>
+        {% endfor %}
+
+        <input type="submit" class="save-changes" value="Zapisz zmiany">
+        <a href="{% url 'edit-user' %}">
+            <input type="button" class="cancel-changes" value="Odrzuć zmiany">
+        </a>
+    </div>
+</form>
+
+<!-- EDIT USER PAGE - JOINED COURSES -->
+<div class="courses-header">
+    <hr>
+    DOŁĄCZONO DO KURSÓW
+    <hr>
+</div>
+
+<div class="courses-wrapper">
+    {% for course in joined_courses %}
+    <div class="course-wrapper">
+        <a href="{% url 'course-main' course.id %}">
+            <div class="course-icon"><img src="{{course.image.url}}" alt=""></div>
+            <div class="course-title">{{course}}</div>
+            <div class="course-author">{{course.author.userprofile}}</div>
+            <!-- <div class="course-mark">4,7 <div class="votes-count">(95)</div></div> -->
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- EDIT USER PAGE - CREATED COURSES -->
+<div class="courses-header">
+    <hr>
+    MOJE KURSY  
+    <a href="{% url 'course-create' %}">
+        &#43;
+    </a>
+    <hr>
+</div>
+
+<div class="courses-wrapper">
+    {% for course in my_courses %}
+    <div class="course-wrapper">
+        <a href="{% url 'course-edit' course.id %}">
+            <div class="course-icon"><img src="{{course.image.url}}" alt=""></div>
+            <div class="course-title">{{course}}</div>
+            <div class="course-author">{{course.author.userprofile}}</div>
+            <!-- <div class="course-mark">4,7 <div class="votes-count">(95)</div></div> -->
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}

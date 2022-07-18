@@ -1,0 +1,64 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="message-error">{{ message }}</div>
+    {% endif %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+    <div class="message-success">{{ message }}</div>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- COURSE EDITION PAGE - COURSE DATA  -->
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="course-edition-wrapper">
+        <div class="login-title">EDYCJA ROZDZIAŁU</div> 
+        <hr>
+        <input type="submit" class="save-changes" value="Zapisz zmiany">
+        <a href="{% url 'edit-user' %}">
+            <input type="button" class="cancel-changes" value="Odrzuć zmiany">
+        </a>
+        <hr>
+        <div>nazwa rozdziału</div>
+        <input name="chapter-name" type="text" placeholder="Nazwa rozdziału" value="{{chapter.chapter_name}}">
+    </div>
+
+    <!-- COURSE EDITION PAGE - CHAPTERS  -->
+    <div class="course-edition-wrapper">
+        <div class="login-title">LEKCJE</div>
+        <hr>
+
+        {% for lesson in lessons %}
+        <div class="course-chapter">
+            <input name="chapter" type="text" value="{{lesson}}" disabled="disabled">
+            <video onloadstart="this.volume=0.5" controls disablePictureInPicture controlsList="nodownload">
+                <source src="{{lesson.video.url}}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="lessons">
+                <div class="sub-chapter">
+                    <a href="{% url 'lesson-del' lesson.id %}">
+                        <button type="button" class="remove-lesson-button">USUŃ LEKCJĘ</button>
+                    </a>
+                </div>
+            </div>
+            <hr>
+        </div>
+        {% endfor %}
+        <a href="{% url 'lesson-add' chapter.id %}">
+            <button type="button" class="add-lesson-button">DODAJ LEKCJĘ</button>
+        </a>
+    </div>
+
+</form>
+
+
+{% endblock content %}

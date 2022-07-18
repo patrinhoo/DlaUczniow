@@ -1,0 +1,34 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- MAIN PAGE - LOGO COMPONENT -->
+<div class="logo-component" style="background-image: url('{% static 'images/main_page_bg.jpg' %}');">
+    <div class="category-wrapper">
+        <div class="logo-category"><a href="{% url 'search' %}?q=matematyka">MATEMATYKA</a></div>
+        <div class="logo-category"><a href="{% url 'search' %}?q=fizyka">FIZYKA</a></div>
+        <div class="logo-category"><a href="{% url 'search' %}?q=angielski">ANGIELSKI</a></div>
+    </div>
+</div>
+
+<hr/>
+<!-- MAIN PAGE - COURSES -->
+<div class="courses-header">
+    POLECANE KURSY
+</div>
+
+<div class="courses-wrapper">
+    {% for course in recent_courses %}
+    <div class="course-wrapper">
+        <a href="{% url 'course-info' course.id %}">
+            <div class="course-icon"><img src="{{course.image.url}}" alt=""></div>
+            <div class="course-title">{{course.course_name}}</div>
+            <div class="course-author">{{course.author.userprofile.name}}</div>
+            <!-- <div class="course-mark">4,7 <div class="votes-count">(95)</div></div> -->
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}

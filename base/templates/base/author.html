@@ -1,0 +1,92 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- AUTHOR PAGE -->
+<div class="course-page-wrapper">
+    <!-- AUTHOR PAGE - COLUMN 1 -->
+    <div class="column-1">
+        <div class="col-1">
+            <div class="course-wrapper">
+                <div class="col1-course-image">
+                    <img src="{{author.userprofile.avatar.url}}" alt="">
+                </div>
+            </div>
+
+            <div class="author-name">
+                {{author.userprofile.name|upper}}
+            </div>
+
+            <div>
+                <div class="col1-course-contains">
+                    <div class="course-contains-header">Autor stworzył:</div> 
+                    <hr>
+                    <ul>
+                        <li class="li-lessons">5 kursów</li>
+                        <li class="li-exercises">10 lekcji</li>
+                        <li class="li-movies">104 min filmów</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="author-name2">
+            {{author.userprofile.name|upper}}
+        </div>
+
+        <div class="course-overwiew">
+            <div class="course-title">O autorze</div>
+            <hr>
+            <div class="course-short-description">
+                {{author.userprofile.about}}
+            </div>
+        </div>
+
+        <hr>
+        <div class="author-courses-header">
+            KURSY AUTORA
+        </div>
+        <hr>
+    
+        <div class="author-courses-wrapper">
+    
+            {% for course in courses %}
+            <div class="author-course-wrapper">
+                <a href="{% url 'course-info' course.id %}">
+                    <div class="course-icon"><img src="{{course.image.url}}" alt=""></div>
+                    <div class="course-title">{{course.course_name}}</div>
+                    <div class="course-author">{{course.author.userprofile.name}}</div>
+                    <!-- <div class="course-mark">4,9 <div class="votes-count">(95)</div></div> -->
+                </a>
+            </div>
+            {% endfor %}
+            
+        </div>
+
+    </div>
+    
+    
+    <!-- AUTHOR PAGE - COLUMN 2 -->
+    <div class="column-2">
+        <div class="course-wrapper">
+            <div class="author-image">
+                <img src="{{author.userprofile.avatar.url}}" alt="">
+            </div>
+        </div>
+
+        <div>
+            <div class="course-contains">
+                <div class="course-contains-header">Autor stworzył:</div> 
+                <hr>
+                <ul>
+                    <li class="li-lessons">5 kursów</li>
+                    <li class="li-exercises">10 lekcji</li>
+                    <li class="li-movies">104 min filmów</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
