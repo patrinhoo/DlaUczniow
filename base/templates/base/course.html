@@ -83,7 +83,7 @@
     <div class="comment">
         <div class="comment-info">    
             <div class="comment-user">
-                <a href="">{{comment.user.userprofile}}</a>
+                <a href="{% url 'author' comment.user.id %}">{{comment.user.userprofile}}</a>
             </div>
             <!-- <div class="comment-date">23 hours ago</div> -->
             
