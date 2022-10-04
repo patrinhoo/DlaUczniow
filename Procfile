@@ -1,0 +1,1 @@
+web: gunicorn DlaUczniow.wsgi --log-file -
