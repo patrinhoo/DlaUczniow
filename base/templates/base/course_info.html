@@ -23,9 +23,21 @@
                     <div class="course-contains-header">Kurs zawiera:</div> 
                     <hr>
                     <ul>
-                        <li class="li-lessons">10 lekcje</li>
-                        <li class="li-movies">104 min filmów</li>
-                        <!-- <li class="li-exercises">5 ćwiczeń</li> -->
+                        {% if chapters_count == 1 %}
+                        <li class="li-lessons">{{chapters_count}} rozdział</li>
+                        {% elif chapters_count == 2 or chapters_count == 3 or chapters_count == 4 %}
+                        <li class="li-lessons">{{chapters_count}} rozdziały</li>
+                        {% else %}
+                        <li class="li-lessons">{{chapters_count}} rozdziałów</li>
+                        {% endif %}
+
+                        {% if lessons_count == 1 %}
+                        <li class="li-movies">{{lessons_count}} lekcja</li>
+                        {% elif lessons_count == 2 or lessons_count == 3 or lessons_count == 4 %}
+                        <li class="li-movies">{{lessons_count}} lekcje</li>
+                        {% else %}
+                        <li class="li-movies">{{lessons_count}} lekcji</li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -38,7 +50,7 @@
             <div class="course-info">
                 <div class="course-marks">
                     <!-- <div class="course-mark">4,7<div class="votes-count">(95)</div></div> -->
-                    <div class="course-members">Liczba uczestników: 1276</div>
+                    <div class="course-members">Liczba uczestników: {{course.members.count}}</div>
                 </div>
                 <div class="course-author">Autor: <a href="{% url 'author' course.author.id %}">{{course.author.userprofile}}</a></div>
             </div>
@@ -53,7 +65,7 @@
             <hr>
             <ul>
                 {% for skill in learned_skills %}
-                <li class="you-will-learn-skill">{{skill|title}}</li>
+                <li class="you-will-learn-skill">{{skill}}</li>
                 {% endfor %}
             </ul>
         </div>
@@ -82,7 +94,7 @@
             <hr>
             <ul>
                 {% for requiment in requirements %}
-                <li class="requirements-skill">{{requiment|title}}</li>
+                <li class="requirements-skill">{{requiment}}</li>
                 {% endfor %}
             </ul>
         </div>
@@ -106,9 +118,21 @@
                 <div class="course-contains-header">Kurs zawiera:</div> 
                 <hr>
                 <ul>
-                    <li class="li-lessons">10 lekcje</li>
-                    <li class="li-movies">104 min filmów</li>
-                    <!-- <li class="li-exercises">5 ćwiczeń</li> -->
+                    {% if chapters_count == 1 %}
+                    <li class="li-lessons">{{chapters_count}} rozdział</li>
+                    {% elif chapters_count == 2 or chapters_count == 3 or chapters_count == 4 %}
+                    <li class="li-lessons">{{chapters_count}} rozdziały</li>
+                    {% else %}
+                    <li class="li-lessons">{{chapters_count}} rozdziałów</li>
+                    {% endif %}
+
+                    {% if chapters_count == 1 %}
+                    <li class="li-movies">{{lessons_count}} lekcja</li>
+                    {% elif chapters_count == 2 or chapters_count == 3 or chapters_count == 4 %}
+                    <li class="li-movies">{{lessons_count}} lekcje</li>
+                    {% else %}
+                    <li class="li-movies">{{lessons_count}} lekcji</li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

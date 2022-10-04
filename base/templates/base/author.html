@@ -23,9 +23,29 @@
                     <div class="course-contains-header">Autor stworzył:</div> 
                     <hr>
                     <ul>
-                        <li class="li-lessons">5 kursów</li>
-                        <li class="li-exercises">10 lekcji</li>
-                        <li class="li-movies">104 min filmów</li>
+                        {% if courses.count == 1 %}
+                        <li class="li-lessons">{{courses.count}} kurs</li>
+                        {% elif courses.count == 2 or courses.count == 3 or courses.count == 4 %}
+                        <li class="li-lessons">{{courses.count}} kursy</li>
+                        {% else %}
+                        <li class="li-lessons">{{courses.count}} kursów</li>
+                        {% endif %}
+
+                        {% if chapters_count == 1 %}
+                        <li class="li-exercises">{{chapters_count}} rozdział</li>
+                        {% elif chapters_count == 2 or chapters_count == 3 or chapters_count == 4 %}
+                        <li class="li-exercises">{{chapters_count}} rozdziały</li>
+                        {% else %}
+                        <li class="li-exercises">{{chapters_count}} rozdziałów</li>
+                        {% endif %}
+
+                        {% if lessons_count == 1 %}
+                        <li class="li-movies">{{lessons_count}} lekcja</li>
+                        {% elif lessons_count == 2 or lessons_count == 3 or lessons_count == 4 %}
+                        <li class="li-movies">{{lessons_count}} lekcje</li>
+                        {% else %}
+                        <li class="li-movies">{{lessons_count}} lekcji</li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -80,9 +100,29 @@
                 <div class="course-contains-header">Autor stworzył:</div> 
                 <hr>
                 <ul>
-                    <li class="li-lessons">5 kursów</li>
-                    <li class="li-exercises">10 lekcji</li>
-                    <li class="li-movies">104 min filmów</li>
+                    {% if courses.count == 1 %}
+                    <li class="li-lessons">{{courses.count}} kurs</li>
+                    {% elif courses.count == 2 or courses.count == 3 or courses.count == 4 %}
+                    <li class="li-lessons">{{courses.count}} kursy</li>
+                    {% else %}
+                    <li class="li-lessons">{{courses.count}} kursów</li>
+                    {% endif %}
+
+                    {% if chapters_count == 1 %}
+                    <li class="li-exercises">{{chapters_count}} rozdział</li>
+                    {% elif chapters_count == 2 or chapters_count == 3 or chapters_count == 4 %}
+                    <li class="li-exercises">{{chapters_count}} rozdziały</li>
+                    {% else %}
+                    <li class="li-exercises">{{chapters_count}} rozdziałów</li>
+                    {% endif %}
+
+                    {% if lessons_count == 1 %}
+                    <li class="li-movies">{{lessons_count}} lekcja</li>
+                    {% elif lessons_count == 2 or lessons_count == 3 or lessons_count == 4 %}
+                    <li class="li-movies">{{lessons_count}} lekcje</li>
+                    {% else %}
+                    <li class="li-movies">{{lessons_count}} lekcji</li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

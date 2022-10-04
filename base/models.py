@@ -11,7 +11,7 @@ class UserProfile(models.Model):
     about = models.TextField(null=True, default="Uzupełnij informacje o sobie")
     registration_date = models.DateTimeField(auto_now_add=True, null=True)
     avatar = models.ImageField(
-        null=True, default="profile.jpg", upload_to='profile_images/')
+        null=True, default="media/profile.jpg", upload_to='media/profile_images/')
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -36,7 +36,7 @@ class Category(models.Model):
 class Course(models.Model):
     course_name = models.CharField(max_length=200)
     image = models.ImageField(
-        null=True, default="default-course.png", upload_to='course_images/')
+        null=True, default="media/default-course.png", upload_to='media/course_images/')
     description = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
@@ -81,7 +81,7 @@ class Lesson(models.Model):
     lesson_name = models.CharField(max_length=200)
     created = models.DateTimeField(auto_now_add=True)
     video = models.FileField(validators=[FileExtensionValidator(
-        allowed_extensions=['MOV', 'avi', 'mp4', 'webm', 'mkv'])], upload_to='videos/')
+        allowed_extensions=['MOV', 'avi', 'mp4', 'webm', 'mkv'])], upload_to='media/videos/')
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
 
     class Meta:

@@ -2,7 +2,6 @@ from django.shortcuts import redirect
 from django.views import View
 from django.views.generic import TemplateView
 
-from dlauczniow.settings import STATIC_URL
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -138,9 +137,20 @@ class AuthorView(TemplateView):
         context = super().get_context_data(**kwargs)
         author = User.objects.get(id=kwargs['pk'])
         courses = Course.objects.filter(author=author)
+        chapters_count = 0
+        lessons_count = 0
+
+        for course in courses:
+            chapters = Chapter.objects.filter(course=course)
+            chapters_count += len(chapters)
+            for chapter in chapters:
+                lessons = Lesson.objects.filter(chapter=chapter)
+                lessons_count += len(lessons)
 
         context['author'] = author
         context['courses'] = courses
+        context['chapters_count'] = chapters_count
+        context['lessons_count'] = lessons_count
 
         return context
 
@@ -154,16 +164,21 @@ class CourseInfoView(TemplateView):
         learned_skills = LearnedSkill.objects.filter(course=course)
         requirements = Requirement.objects.filter(course=course)
         chapters = Chapter.objects.filter(course=course)
+        lessons_count = 0
 
         chapters_lessons = dict()
         for chapter in chapters:
             chapter_lessons = Lesson.objects.filter(chapter=chapter)
             chapters_lessons[chapter] = chapter_lessons
+            lessons_count += len(chapter_lessons)
 
         context['course'] = course
         context['learned_skills'] = learned_skills
         context['requirements'] = requirements
         context['chapters_lessons'] = chapters_lessons
+
+        context['chapters_count'] = len(chapters)
+        context['lessons_count'] = lessons_count
 
         return context
 
