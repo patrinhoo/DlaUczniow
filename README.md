@@ -1,5 +1,5 @@
 ## DlaUczniow
-This is a simple Web App for students and teachers
+This is a simple Web App for students and teachers  
 You can test this app at:  https://dlauczniow.herokuapp.com/
 
 ## Technologies
